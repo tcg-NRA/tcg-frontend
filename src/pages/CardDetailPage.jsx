@@ -1,40 +1,33 @@
-//src/pages/CardDetailPage.jsx
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+// frontend/src/pages/CardDetailPage.jsx
+import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 
-function CardDetailPage() {
+export default function CardDetailPage() {
   const { id } = useParams();
   const [card, setCard] = useState(null);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/cards/${id}`)
       .then(res => res.json())
-      .then(data => setCard(data));
+      .then(setCard)
+      .catch(console.error);
   }, [id]);
 
-  if (!card) return <div>Loading…</div>;
+  if (!card) return <div style={{ padding: 16 }}>Loading…</div>;
 
   return (
-    <div style={{ padding: '2rem', display: 'flex', gap: '2rem' }}>
-      <img src={card.art_url} alt={card.name} style={{ width: '300px' }} />
-      <div>
-        <h1>{card.name}</h1>
-        <p><strong>Mana:</strong> {card.mana_cost}</p>
-        <p><strong>Attack:</strong> {card.attack}</p>
-        <p><strong>Health:</strong> {card.health}</p>
-        <p>{card.description}</p>
-
-        <h3>Keywords</h3>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          {card.keywords.map(kw => (
-            <span key={kw} style={{ background: '#eee', padding: '0.25rem 0.5rem', borderRadius: '4px' }}>
-              {kw}
-            </span>
-          ))}
-        </div>
+    <div style={{ padding: 16 }}>
+      <Link to="/" style={{ display: 'block', marginBottom: 16 }}>← Back to Gallery</Link>
+      <div style={{ display: 'flex', flexDirection: 'column', maxWidth: 600 }}>
+        <img
+          src={card.art_url}
+          alt={card.name}
+          style={{ width: '100%', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}
+        />
+        <h1 style={{ marginTop: 16 }}>{card.name}</h1>
+        <p style={{ marginTop: 8 }}>{card.description}</p>
+        {/* you can add mana/attack/health/stats here */}
       </div>
     </div>
   );
 }
-
-export default CardDetailPage;
