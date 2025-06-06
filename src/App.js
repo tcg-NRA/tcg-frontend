@@ -1,33 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import CardPage from './pages/CardPage';
+import CardDetailPage from './pages/CardDetailPage';
+import DownloadPage from './pages/DownloadPage';
 
 function App() {
-  useEffect(() => {
-    // This line hits your Render URL’s /health endpoint
-    fetch(`${process.env.REACT_APP_API_URL}/health`)
-      .then(res => res.text())
-      .then(text => {
-        console.log('✅ Backend replied:', text);
-      })
-      .catch(err => {
-        console.error('🔴 Fetch error:', err);
-      });
-  }, []);
-
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '100vh',
-      backgroundColor: '#20232a',
-      color: '#61dafb',
-      fontFamily: 'sans-serif',
-      textAlign: 'center'
-    }}>
-      <h1>Testing Frontend ↔ Backend</h1>
-      <p>Open your browser’s Console (F12) to see the result of the fetch.</p>
-    </div>
+    <Router>
+      <nav style={{ padding: '1rem', backgroundColor: '#282c34' }}>
+        <Link to="/" style={{ marginRight: '1rem', color: '#61dafb' }}>Cards</Link>
+        <Link to="/download" style={{ color: '#61dafb' }}>Download</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<CardPage />} />
+        <Route path="/cards/:id" element={<CardDetailPage />} />
+        <Route path="/download" element={<DownloadPage />} />
+      </Routes>
+    </Router>
   );
 }
 
