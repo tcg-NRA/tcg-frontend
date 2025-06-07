@@ -21,8 +21,7 @@ export default function CoverPage() {
             key={card._id || i}
             className="text-center transform transition-transform hover:-translate-y-2"
           >
-            {/* Aspect-ratio container to maintain shape */}
-            <div className="w-full aspect-[2/3] bg-white rounded-lg shadow-md overflow-hidden flex items-center justify-center">
+            <div className="w-full max-w-[160px] mx-auto aspect-[2/3] bg-white rounded-lg shadow-md overflow-hidden flex items-center justify-center">
               <img
                 src={card.art_url}
                 alt={card.name}
