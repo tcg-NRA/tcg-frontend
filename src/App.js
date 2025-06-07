@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import CoverPage from './pages/CoverPage';          // ✅ New homepage
-import CardPage from './pages/CardPage';            // Optional: keep at /cards
 import CardDetailPage from './pages/CardDetailPage';
 import DownloadPage from './pages/DownloadPage';
 
@@ -15,8 +14,7 @@ function App() {
       </nav>
 
       <Routes>
-        <Route path="/" element={<CoverPage />} />               {/* 👈 Now default homepage */}
-        <Route path="/cards" element={<CardPage />} />           {/* 👈 Old page now at /cards */}
+        <Route path="/" element={<CoverPage />} />              
         <Route path="/cards/:id" element={<CardDetailPage />} />
         <Route path="/download" element={<DownloadPage />} />
       </Routes>
