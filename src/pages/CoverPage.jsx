@@ -3,14 +3,19 @@ import React, { useEffect, useState } from 'react';
 export default function CoverPage() {
   const [cards, setCards] = useState([]);
 
-  const cloudName = 'dbkr3jpmr';
+  const cloudName = 'dbkr3jpmr'; // 🔁 Your Cloudinary cloud name
   const baseUrl = `https://res.cloudinary.com/${cloudName}/image/upload/w_120,h_180,c_fit/cards/`;
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/cards`)
       .then(res => res.json())
-      .then(setCards)
-      .catch(console.error);
+      .then(data => {
+        console.log("✅ Fetched cards:", data); // 🧪 Debug
+        setCards(data);
+      })
+      .catch(err => {
+        console.error("🔴 Failed to fetch cards:", err);
+      });
   }, []);
 
   return (
@@ -19,8 +24,8 @@ export default function CoverPage() {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
         {cards.map((card, i) => {
-          // 🔧 Strip random Cloudinary suffix like "_vtl97f"
-          const cleanName = card.image_name.replace(/_[a-z0-9]{6,}$/i, '');
+          const rawName = card.image_name || '';
+          const cleanName = rawName.replace(/_[a-z0-9]{6,}$/i, '') || 'default_image';
           const imageUrl = `${baseUrl}${cleanName}.png`;
 
           return (
@@ -31,14 +36,17 @@ export default function CoverPage() {
               <div className="w-[120px] h-[180px] mx-auto bg-white rounded-lg shadow-md overflow-hidden flex items-center justify-center shrink-0">
                 <img
                   src={imageUrl}
-                  alt={card.name}
+                  alt={card.name || 'Card Image'}
                   width="100"
                   height="150"
                   loading="lazy"
                   className="w-[100px] h-[150px] object-contain"
+                  onError={(e) => {
+                    e.target.src = 'https://via.placeholder.com/100x150?text=No+Image';
+                  }}
                 />
               </div>
-              <p className="mt-2 text-sm text-gray-800">{card.name}</p>
+              <p className="mt-2 text-sm text-gray-800">{card.name || 'Unknown Card'}</p>
             </div>
           );
         })}
