@@ -1,16 +1,18 @@
+// frontend/src/pages/CoverPage.jsx
 import React, { useEffect, useState } from 'react';
 
 export default function CoverPage() {
   const [cards, setCards] = useState([]);
 
-  const cloudName = 'dbkr3jpmr'; // 🔁 Your Cloudinary cloud name
+  // your Cloudinary account details
+  const cloudName = 'dbkr3jpmr';
   const baseUrl = `https://res.cloudinary.com/${cloudName}/image/upload/w_120,h_180,c_fit/cards/`;
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/cards`)
       .then(res => res.json())
       .then(data => {
-        console.log("✅ Fetched cards:", data); // 🧪 Debug
+        console.log("✅ Fetched cards:", data);
         setCards(data);
       })
       .catch(err => {
@@ -24,9 +26,10 @@ export default function CoverPage() {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
         {cards.map((card, i) => {
-          const rawName = card.image_name || '';
+          // ── NEW: derive a clean image name from the backend‐provided `image_name`
+          const rawName   = card.image_name || '';
           const cleanName = rawName.replace(/_[a-z0-9]{6,}$/i, '') || 'default_image';
-          const imageUrl = `${baseUrl}${cleanName}.png`;
+          const imageUrl  = `${baseUrl}${cleanName}.png`;
 
           return (
             <div
@@ -41,7 +44,7 @@ export default function CoverPage() {
                   height="150"
                   loading="lazy"
                   className="w-[100px] h-[150px] object-contain"
-                  onError={(e) => {
+                  onError={e => { 
                     e.target.src = 'https://via.placeholder.com/100x150?text=No+Image';
                   }}
                 />
