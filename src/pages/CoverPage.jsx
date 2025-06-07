@@ -15,23 +15,21 @@ export default function CoverPage() {
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold mb-6">All Card Arts</h1>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
         {cards.map((card, i) => (
           <div
             key={card._id || i}
-            className="cursor-pointer text-center transform transition-transform hover:-translate-y-2"
+            className="text-center transform transition-transform hover:-translate-y-2"
           >
-            <img
-              src={card.art_url}
-              alt={card.name}
-              style={{
-                objectFit: 'cover',
-                width: '100%',
-                height: '240px',
-                borderRadius: '8px',
-                boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
-              }}
-            />
+            <div
+              className="w-full h-[220px] overflow-hidden rounded-lg shadow-md"
+            >
+              <img
+                src={card.art_url}
+                alt={card.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
             <p className="mt-2 text-sm text-gray-800">{card.name}</p>
           </div>
         ))}
