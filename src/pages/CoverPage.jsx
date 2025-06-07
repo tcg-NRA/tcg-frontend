@@ -2,15 +2,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { buildUrl } from '../utils/cloudinary';
-import { cards as cardList } from '../data/cards';
 
 export default function CoverPage() {
   const navigate = useNavigate();
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    // Load your manifest of public_ids
-    setCards(cardList);
+    // Fetch your cards from the backend API
+    fetch(`${process.env.REACT_APP_API_URL}/api/cards`)
+      .then(res => res.json())
+      .then(setCards)
+      .catch(console.error);
   }, []);
 
   return (
@@ -18,9 +20,12 @@ export default function CoverPage() {
       <h1 className="text-3xl font-bold mb-6">All Card Arts</h1>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-        {cards.map((card) => {
-          // Build a small thumbnail URL
-          const thumbUrl = buildUrl(card.public_id, { width: 160, height: 240 });
+        {cards.map(card => {
+          // Prepend your Cloudinary folder (cards_art) to each public ID
+          const publicId = `cards_art/${card._id}`;
+          // Generate a 160×240 thumbnail URL
+          const thumbUrl = buildUrl(publicId, { width: 160, height: 240 });
+
           return (
             <div
               key={card._id}
