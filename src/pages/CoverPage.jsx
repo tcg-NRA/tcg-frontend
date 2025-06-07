@@ -21,12 +21,11 @@ export default function CoverPage() {
             key={card._id || i}
             className="text-center transform transition-transform hover:-translate-y-2"
           >
-            {/* Fixed-size image container */}
-            <div className="w-[140px] h-[210px] mx-auto bg-white rounded-lg shadow-md overflow-hidden flex items-center justify-center">
+            <div className="w-[120px] h-[180px] mx-auto bg-white rounded-lg shadow-md overflow-hidden flex items-center justify-center shrink-0">
               <img
                 src={card.art_url}
                 alt={card.name}
-                className="max-h-full max-w-full object-contain"
+                className="w-[100px] h-[150px] object-contain"
               />
             </div>
             <p className="mt-2 text-sm text-gray-800">{card.name}</p>
