@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import CoverPage from './pages/CoverPage';          // ✅ New homepage
-import CardDetailPage from './pages/CardDetailPage';
+import CoverPage from './pages/CoverPage';  
 import DownloadPage from './pages/DownloadPage';
 
 function App() {
@@ -14,8 +13,7 @@ function App() {
       </nav>
 
       <Routes>
-        <Route path="/" element={<CoverPage />} />              
-        <Route path="/cards/:id" element={<CardDetailPage />} />
+        <Route path="/" element={<CoverPage />} />   
         <Route path="/download" element={<DownloadPage />} />
       </Routes>
     </Router>
