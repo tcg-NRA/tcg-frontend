@@ -12,12 +12,12 @@ export default function CoverPage() {
       .catch(console.error);
   }, []);
 
-  // helper to insert Cloudinary resize parameters into the URL
-  const getThumbnailUrl = (url, width = 200, height = 200) => {
-    // assumes URL contains "/upload/"
+  // helper to insert Cloudinary scale parameters into the URL
+  const getScaledUrl = (url, width = 200) => {
+    // replaces '/upload/' with '/upload/w_{width},c_scale/' for proportional scaling
     return url.replace(
       '/upload/',
-      `/upload/w_${width},h_${height},c_fill/`
+      `/upload/w_${width},c_scale/`
     );
   };
 
@@ -33,13 +33,14 @@ export default function CoverPage() {
             onClick={() => navigate(`/cards/${card._id}`)}
           >
             <img
-              src={getThumbnailUrl(card.art_url, 150, 150)}
+              src={getScaledUrl(card.art_url, 150)}
               alt={card.name}
               loading="lazy"
               className="
-                w-40 h-40           /* optional fixed box for layout */
-                object-cover        /* maintain aspect */
-                rounded shadow-md   /* styling */
+                w-full            /* take full grid cell width */
+                max-w-xs          /* limit max width if desired */
+                object-contain    /* contain within box */
+                rounded shadow-md /* styling */
               "
             />
           </div>
