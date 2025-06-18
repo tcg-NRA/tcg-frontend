@@ -28,7 +28,13 @@ export default function CoverPage() {
               src={card.art_url}
               alt={card.name}
               loading="lazy"
-              className="w-full max-w-xs max-h-72 object-cover rounded shadow-md"
+              className={
+                `w-24 h-24 ` +           // fixed small box
+                `object-cover ` +        // fill the box
+                `scale-75 hover:scale-100 ` + // shrink & grow on hover
+                `transition-transform ` + 
+                `rounded shadow-md`
+              }
             />
           </div>
         ))}
