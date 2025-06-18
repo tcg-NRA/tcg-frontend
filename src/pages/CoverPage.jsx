@@ -6,7 +6,6 @@ export default function CoverPage() {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    // Fetch the list of cards (each has art_url)
     fetch(`${process.env.REACT_APP_API_URL}/api/cards`)
       .then(res => res.json())
       .then(setCards)
@@ -24,18 +23,21 @@ export default function CoverPage() {
             className="cursor-pointer transform transition-transform hover:-translate-y-2"
             onClick={() => navigate(`/cards/${card._id}`)}
           >
-            <img
-              src={card.art_url}
-              alt={card.name}
-              loading="lazy"
-              className={
-                `w-24 h-24 ` +           // fixed small box
-                `object-cover ` +        // fill the box
-                `scale-75 hover:scale-100 ` + // shrink & grow on hover
-                `transition-transform ` + 
-                `rounded shadow-md`
-              }
-            />
+            {/* fixed-size wrapper ensures small art display */}
+            <div className="w-24 h-24 overflow-hidden">
+              <img
+                src={card.art_url}
+                alt={card.name}
+                loading="lazy"
+                className="
+                  w-full h-full           /* fill the wrapper */
+                  object-cover            /* maintain cover aspect */
+                  transition-transform    /* smooth scaling */
+                  scale-75 hover:scale-100 /* shrink & pop on hover */
+                  rounded shadow-md       /* styling */
+                "
+              />
+            </div>
           </div>
         ))}
       </div>
