@@ -24,12 +24,12 @@ export default function CoverPage() {
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold mb-6">All Card Arts</h1>
 
-      {/* Horizontal scrollable flex container */}
-      <div className="flex overflow-x-auto space-x-6 py-4">
+      {/* Responsive horizontal layout that wraps */}
+      <div className="flex flex-wrap gap-6 justify-center">
         {cards.map(card => (
           <div
             key={card._id}
-            className="flex-none cursor-pointer transform transition-transform hover:-translate-y-2"
+            className="flex-shrink-0 cursor-pointer transform transition-transform hover:-translate-y-2"
             style={{ width: '200px' }}
             onClick={() => navigate(`/cards/${card._id}`)}
           >
